@@ -103,7 +103,7 @@ export function CreateAlarm({
   return (
     <Card className="max-w-7xl mx-auto border-transparent bg-gray-50">
       <CardHeader>
-        <CardTitle className="text-black text-center text-2xl">⏰ Create New Alarm</CardTitle>
+        <CardTitle className="text-black text-center text-2xl">Build Your New Habit</CardTitle>
       </CardHeader>
       <CardContent className="p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -115,7 +115,7 @@ export function CreateAlarm({
             </div>
             <div>
               <label htmlFor="habitType" className="block text-sm font-medium text-gray-700 mb-2">
-                Select Habit
+                Habit
               </label>
               <select
                 id="habitType"
@@ -143,11 +143,11 @@ export function CreateAlarm({
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-xl font-semibold text-black mb-2">🕐 Wake Up</h3>
-              <p className="text-sm text-gray-600 mb-4">Set your wake-up goal</p>
+              <p className="text-sm text-gray-600 mb-4">Set your goal</p>
             </div>
             <div>
               <label htmlFor="wakeUpTime" className="block text-sm font-medium text-gray-700 mb-2">
-                Wake Up Date & Time
+                Date & Time
               </label>
               <input
                 id="wakeUpTime"
@@ -194,7 +194,7 @@ export function CreateAlarm({
             </div>
             <div>
               <label htmlFor="charity" className="block text-sm font-medium text-gray-700 mb-2">
-                Select Charity
+                Charitiy
               </label>
               <select
                 id="charity"
