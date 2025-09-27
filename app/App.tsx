@@ -41,11 +41,6 @@ function App() {
 
   return (
     <div className="container mx-auto p-6">
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">⏰ Wake Up Challenge</h1>
-        <p className="text-lg text-gray-600">Set alarms with stakes - wake up on time or donate to charity!</p>
-      </div>
-      
       <Card className="min-h-[500px]">
         <CardContent className="pt-6">
           {currentAccount ? (
