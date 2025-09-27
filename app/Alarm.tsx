@@ -211,7 +211,7 @@ export function Alarm({ id }: { id: string }) {
           <div className="space-y-2">
             <div className="text-sm text-gray-600">❤️ Charity</div>
             <div className="text-sm font-mono bg-gray-100 p-2 rounded">
-              {alarmData.charity_address.slice(0, 8)}...{alarmData.charity_address.slice(-8)}
+              {alarmData.charity_address}
             </div>
           </div>
         </div>

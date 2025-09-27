@@ -14,7 +14,7 @@ function App() {
   const [view, setView] = useState<'create' | 'search' | 'alarm'>('create');
 
   useEffect(() => {
-    const hash = window.location.hash.slice(1);
+    const hash = window.location.hash;
     if (isValidSuiObjectId(hash)) {
       setAlarm(hash);
       setView('alarm');
@@ -61,7 +61,7 @@ function App() {
                     ← Back to Alarm Selection
                   </Button>
                   <div className="text-sm text-gray-500">
-                    Alarm ID: {alarmId.slice(0, 8)}...{alarmId.slice(-8)}
+                    Alarm ID: {alarmId}
                   </div>
                 </div>
                 

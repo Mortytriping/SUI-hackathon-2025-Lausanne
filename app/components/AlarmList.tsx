@@ -168,8 +168,8 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
                         </div>
                         <p className="font-semibold text-gray-900">⏰ {formatTime(alarm.wake_up_time)}</p>
                         <p className="text-sm text-gray-600">💰 Deposit: {formatSUI(alarm.deposit_amount)} SUI</p>
-                        <p className="text-sm text-gray-600">👤 Owner: {alarm.owner.slice(0, 8)}...{alarm.owner.slice(-8)}</p>
-                        <p className="text-xs text-gray-500">🆔 ID: {alarm.objectId.slice(0, 8)}...{alarm.objectId.slice(-8)}</p>
+                        <p className="text-sm text-gray-600">👤 Owner: {alarm.owner}</p>
+                        <p className="text-xs text-gray-500">🆔 ID: {alarm.objectId}</p>
                       </div>
                       <Button 
                         onClick={() => onSelectAlarm(alarm.objectId)}
@@ -180,7 +180,7 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
                       </Button>
                     </div>
                     <div className="text-xs text-gray-500">
-                      ❤️ Charity: {alarm.charity_address.slice(0, 8)}...{alarm.charity_address.slice(-8)}
+                      ❤️ Charity: {alarm.charity_address}
                     </div>
                   </div>
                 );

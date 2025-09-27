@@ -84,7 +84,7 @@ export function CreateAlarm({
   const getMinDateTime = () => {
     const now = new Date();
     now.setMinutes(now.getMinutes() + 1);
-    return now.toISOString().slice(0, 16);
+    return now.toISOString();
   };
 
   return (
