@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { ConnectButton } from "@mysten/dapp-kit";
 
 export default function Navbar() {
@@ -15,11 +16,27 @@ export default function Navbar() {
         />
       </div>
 
-      {/* Titre de l'app au centre */}
-      <div className="flex-1 flex justify-center">
+      {/* Section centrale avec titre et navigation */}
+      <div className="flex items-center space-x-8">
         <h1 className="text-xl font-semibold text-gray-900">
           Wake or stake !
         </h1>
+        
+        {/* Navigation links */}
+        <div className="flex items-center space-x-6">
+          <Link 
+            href="/" 
+            className="text-gray-600 hover:text-gray-900 hover:scale-105 transition-all duration-200 font-medium"
+          >
+            🏠 Home
+          </Link>
+          <Link 
+            href="/dashboard" 
+            className="text-gray-600 hover:text-gray-900 hover:scale-105 transition-all duration-200 font-medium"
+          >
+            📊 Dashboard
+          </Link>
+        </div>
       </div>
 
       {/* Section Wallet à droite */}

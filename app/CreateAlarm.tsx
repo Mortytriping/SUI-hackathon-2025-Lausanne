@@ -88,20 +88,17 @@ export function CreateAlarm({
   };
 
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card className="max-w-4xl mx-auto border-transparent">
       <CardHeader>
-        <CardTitle className="text-gray-900 text-center">Create New Alarm</CardTitle>
-        <CardDescription className="text-gray-600 text-center">
-          Set your wake-up alarm with a deposit. Complete it on time to get your deposit back, or it goes to charity!
-        </CardDescription>
+        <CardTitle className="text-black text-center text-2xl">⏰ Create New Alarm</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {/* Column 1: Time Selection */}
           <div className="space-y-4">
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">🕐 Wake Up Time</h3>
-              <p className="text-sm text-gray-600 mb-4">Choose when you want to wake up</p>
+              <h3 className="text-lg font-semibold text-black mb-2">🕐 Wake Up</h3>
+              <p className="text-sm text-gray-600 mb-4">Set your wake-up goal</p>
             </div>
             <div>
               <label htmlFor="wakeUpTime" className="block text-sm font-medium text-gray-700 mb-2">
@@ -122,7 +119,7 @@ export function CreateAlarm({
           <div className="space-y-4">
             <div className="text-center">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">💰 Deposit Amount</h3>
-              <p className="text-sm text-gray-600 mb-4">How much SUI to stake</p>
+              <p className="text-sm text-gray-600 mb-4">Your future self will thank you</p>
             </div>
             <div>
               <label htmlFor="depositAmount" className="block text-sm font-medium text-gray-700 mb-2">
@@ -147,8 +144,8 @@ export function CreateAlarm({
           {/* Column 3: Charity Selection */}
           <div className="space-y-4">
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">❤️ Choose Charity</h3>
-              <p className="text-sm text-gray-600 mb-4">Where your deposit goes if you fail</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">🤝 Choose Charity</h3>
+              <p className="text-sm text-gray-600 mb-4">Create positive impact either way</p>
             </div>
             <div>
               <label htmlFor="charity" className="block text-sm font-medium text-gray-700 mb-2">
@@ -182,7 +179,7 @@ export function CreateAlarm({
             {isSuccess || isPending ? (
               <ClipLoader size={20} color="white" />
             ) : (
-              "Create Alarm ⏰"
+              "Submit"
             )}
           </Button>
         </div>
