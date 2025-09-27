@@ -23,13 +23,7 @@ const HABIT_OPTIONS = [
   "Meditation",
   "Study/Learning",
   "Reading",
-  "Healthy Eating",
-  "Water Intake",
   "Journal Writing",
-  "Language Practice",
-  "Creative Work",
-  "No Social Media",
-  "Sleep Schedule",
   "Other"
 ];
 
