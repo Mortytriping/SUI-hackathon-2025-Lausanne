@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 // Common charity addresses (in a real app, you might fetch these from a database)
 const CHARITY_OPTIONS = [
-  { name: "Red Cross", address: "0x1234567890123456789012345678901234567890" },
+  { name: "Red Cross", address: "0x55d5de0dbbec8a3589a9025525cc950026da5128703ffc459dc881a23a8e1f80" },
   { name: "UNICEF", address: "0x2345678901234567890123456789012345678901" },
   { name: "Doctors Without Borders", address: "0x3456789012345678901234567890123456789012" },
   { name: "World Wildlife Fund", address: "0x4567890123456789012345678901234567890123" },

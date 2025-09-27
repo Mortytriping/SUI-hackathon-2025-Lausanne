@@ -8,10 +8,25 @@ import type { SuiObjectData } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useNetworkVariable } from "./networkConfig";
 import { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+
+// Positive wake-up sentences for verification
+const WAKE_UP_SENTENCES = [
+  "I am grateful for this beautiful morning and ready to embrace the day",
+  "Today is full of endless possibilities and I choose to make it amazing",
+  "I am energized, focused, and prepared to achieve my goals today",
+  "This morning brings new opportunities and I welcome them with open arms",
+  "I am blessed with another day to make a positive difference in the world",
+  "My mind is clear, my body is strong, and I am ready for today's adventures",
+  "I choose happiness, productivity, and success in everything I do today",
+  "Today I will be kind to myself and others while pursuing my dreams",
+  "I am thankful for my health, my loved ones, and this fresh start",
+  "Every sunrise is a reminder that I can begin again with renewed purpose",
+];
 
 export function Alarm({ id }: { id: string }) {
   const alarmPackageId = useNetworkVariable("alarmPackageId");
@@ -28,6 +43,10 @@ export function Alarm({ id }: { id: string }) {
 
   const [waitingForTxn, setWaitingForTxn] = useState("");
   const [currentTime, setCurrentTime] = useState(Date.now());
+  const [showVerification, setShowVerification] = useState(false);
+  const [verificationSentence, setVerificationSentence] = useState("");
+  const [userInput, setUserInput] = useState("");
+  const [inputError, setInputError] = useState("");
 
   // Update current time every second
   useEffect(() => {
@@ -36,6 +55,30 @@ export function Alarm({ id }: { id: string }) {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleCompleteAlarm = () => {
+    // Show verification step with random positive sentence
+    const randomSentence = WAKE_UP_SENTENCES[Math.floor(Math.random() * WAKE_UP_SENTENCES.length)];
+    setVerificationSentence(randomSentence);
+    setShowVerification(true);
+    setUserInput("");
+    setInputError("");
+  };
+
+  const submitVerification = () => {
+    // Check if user typed the sentence correctly (case insensitive, ignoring extra spaces)
+    const userInputClean = userInput.trim().toLowerCase().replace(/\s+/g, ' ');
+    const expectedClean = verificationSentence.toLowerCase().replace(/\s+/g, ' ');
+    
+    if (userInputClean !== expectedClean) {
+      setInputError("Please type the sentence exactly as shown above.");
+      return;
+    }
+
+    // Sentence is correct, proceed with blockchain transaction
+    executeMoveCall("complete");
+    setShowVerification(false);
+  };
 
   const executeMoveCall = (method: "complete" | "fail" | "cancel") => {
     setWaitingForTxn(method);
@@ -180,12 +223,78 @@ export function Alarm({ id }: { id: string }) {
           </div>
         </div>
 
+        {/* Wake-up Verification Section */}
+        {showVerification && (
+          <div className="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-300 rounded-xl">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">🌅 Prove You're Awake!</h3>
+              <p className="text-gray-700 mb-4">
+                To complete your alarm and get your deposit back, please type the following positive sentence exactly:
+              </p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border-l-4 border-green-400 mb-4">
+              <p className="font-medium text-gray-800 text-center italic">
+                "{verificationSentence}"
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <Input
+                type="text"
+                placeholder="Type the sentence exactly as shown above..."
+                value={userInput}
+                onChange={(e) => {
+                  setUserInput(e.target.value);
+                  setInputError(""); // Clear error when user types
+                }}
+                className={`w-full p-3 text-lg ${inputError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+              />
+              
+              {inputError && (
+                <Alert className="border-red-300 bg-red-50">
+                  <AlertDescription className="text-red-700">
+                    {inputError}
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              <div className="flex gap-3 justify-center">
+                <Button
+                  onClick={submitVerification}
+                  disabled={!userInput.trim() || waitingForTxn !== ""}
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-2 text-lg rounded-lg transition-all duration-200 transform hover:scale-105"
+                >
+                  {waitingForTxn === "complete" ? (
+                    <ClipLoader size={20} color="white" />
+                  ) : (
+                    "✅ Complete Alarm"
+                  )}
+                </Button>
+                
+                <Button
+                  onClick={() => {
+                    setShowVerification(false);
+                    setUserInput("");
+                    setInputError("");
+                  }}
+                  variant="outline"
+                  disabled={waitingForTxn !== ""}
+                  className="px-6 py-2 text-lg"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Action Buttons */}
         {ownedByCurrentAccount && (
           <div className="flex flex-wrap gap-3 justify-center">
-            {canComplete && (
+            {canComplete && !showVerification && (
               <Button
-                onClick={() => executeMoveCall("complete")}
+                onClick={handleCompleteAlarm}
                 disabled={waitingForTxn !== ""}
                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-all duration-200 transform hover:scale-105"
               >
