@@ -7,11 +7,13 @@ module alarm::alarm {
   use sui::sui::SUI;
   use sui::clock::{Self, Clock};
   use sui::event;
+  use std::string::String;
   
   /// Shared alarm object
   public struct Alarm has key {
     id: UID,
     owner: address,
+    habit_type: String,  // type of habit being tracked
     wake_up_time: u64,  // timestamp in milliseconds
     deposit_amount: u64,
     charity_address: address,
@@ -24,6 +26,7 @@ module alarm::alarm {
   public struct AlarmCreated has copy, drop {
     alarm_id: ID,
     owner: address,
+    habit_type: String,
     wake_up_time: u64,
     deposit_amount: u64,
     charity_address: address,
@@ -51,6 +54,7 @@ module alarm::alarm {
 
   /// Create and share an Alarm object
   public fun create_alarm(
+    habit_type: String,
     wake_up_time: u64,
     charity_address: address,
     deposit: Coin<SUI>,
@@ -64,6 +68,7 @@ module alarm::alarm {
     event::emit(AlarmCreated {
       alarm_id: object::uid_to_inner(&alarm_id),
       owner,
+      habit_type,
       wake_up_time,
       deposit_amount,
       charity_address,
@@ -72,6 +77,7 @@ module alarm::alarm {
     let alarm = Alarm {
       id: alarm_id,
       owner,
+      habit_type,
       wake_up_time,
       deposit_amount,
       charity_address,

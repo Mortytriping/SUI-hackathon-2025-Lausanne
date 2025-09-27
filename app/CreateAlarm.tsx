@@ -16,6 +16,23 @@ const CHARITY_OPTIONS = [
   { name: "Salvation Army", address: "0x5678901234567890123456789012345678901234" },
 ];
 
+// Common habit types
+const HABIT_OPTIONS = [
+  "Wake Up Early",
+  "Exercise",
+  "Meditation",
+  "Study/Learning",
+  "Reading",
+  "Healthy Eating",
+  "Water Intake",
+  "Journal Writing",
+  "Language Practice",
+  "Creative Work",
+  "No Social Media",
+  "Sleep Schedule",
+  "Other"
+];
+
 export function CreateAlarm({
   onCreated,
 }: {
@@ -23,6 +40,7 @@ export function CreateAlarm({
 }) {
   const alarmPackageId = useNetworkVariable("alarmPackageId");
   const suiClient = useSuiClient();
+  const [habitType, setHabitType] = useState("");
   const [wakeUpTime, setWakeUpTime] = useState("");
   const [depositAmount, setDepositAmount] = useState("");
   const [selectedCharity, setSelectedCharity] = useState("");
@@ -34,7 +52,7 @@ export function CreateAlarm({
   } = useSignAndExecuteTransaction();
 
   function createAlarm() {
-    if (!wakeUpTime || !depositAmount || !selectedCharity) {
+    if (!habitType || !wakeUpTime || !depositAmount || !selectedCharity) {
       alert("Please fill all fields");
       return;
     }
@@ -50,6 +68,7 @@ export function CreateAlarm({
 
     tx.moveCall({
       arguments: [
+        tx.pure.string(habitType),
         tx.pure.u64(wakeUpTimestamp),
         tx.pure.address(selectedCharity),
         coin,
@@ -93,8 +112,34 @@ export function CreateAlarm({
         <CardTitle className="text-black text-center text-2xl">⏰ Create New Alarm</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {/* Column 1: Time Selection */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {/* Column 1: Habit Type */}
+          <div className="space-y-4">
+            <div className="text-center">
+              <h3 className="text-lg font-semibold text-black mb-2">🎯 Habit Type</h3>
+              <p className="text-sm text-gray-600 mb-4">What habit are you building?</p>
+            </div>
+            <div>
+              <label htmlFor="habitType" className="block text-sm font-medium text-gray-700 mb-2">
+                Select Habit
+              </label>
+              <select
+                id="habitType"
+                value={habitType}
+                onChange={(e) => setHabitType(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Choose habit type...</option>
+                {HABIT_OPTIONS.map((habit) => (
+                  <option key={habit} value={habit}>
+                    {habit}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Column 2: Time Selection */}
           <div className="space-y-4">
             <div className="text-center">
               <h3 className="text-lg font-semibold text-black mb-2">🕐 Wake Up</h3>
@@ -115,7 +160,7 @@ export function CreateAlarm({
             </div>
           </div>
 
-          {/* Column 2: Deposit Amount */}
+          {/* Column 3: Deposit Amount */}
           <div className="space-y-4">
             <div className="text-center">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">💰 Deposit Amount</h3>
@@ -141,7 +186,7 @@ export function CreateAlarm({
             </div>
           </div>
 
-          {/* Column 3: Charity Selection */}
+          {/* Column 4: Charity Selection */}
           <div className="space-y-4">
             <div className="text-center">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">🤝 Choose Charity</h3>
@@ -173,7 +218,7 @@ export function CreateAlarm({
           <Button
             size="lg"
             onClick={createAlarm}
-            disabled={isSuccess || isPending || !wakeUpTime || !depositAmount || !selectedCharity}
+            disabled={isSuccess || isPending || !habitType || !wakeUpTime || !depositAmount || !selectedCharity}
             className="w-full md:w-auto px-8 text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
           >
             {isSuccess || isPending ? (

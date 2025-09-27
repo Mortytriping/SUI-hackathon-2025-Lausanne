@@ -6,6 +6,7 @@ import { useState } from "react";
 
 interface AlarmData {
   objectId: string;
+  habit_type: string;
   wake_up_time: string;
   deposit_amount: string;
   charity_address: string;
@@ -21,6 +22,7 @@ function getAlarmFields(data: any): AlarmData | null {
   const fields = data.content.fields;
   return {
     objectId: data.objectId,
+    habit_type: fields.habit_type,
     wake_up_time: fields.wake_up_time,
     deposit_amount: fields.deposit_amount,
     charity_address: fields.charity_address,
@@ -166,6 +168,7 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
                             {status.text}
                           </span>
                         </div>
+                        <p className="font-semibold text-gray-900">🎯 {alarm.habit_type}</p>
                         <p className="font-semibold text-gray-900">⏰ {formatTime(alarm.wake_up_time)}</p>
                         <p className="text-sm text-gray-600">💰 Deposit: {formatSUI(alarm.deposit_amount)} SUI</p>
                         <p className="text-sm text-gray-600">👤 Owner: {alarm.owner}</p>

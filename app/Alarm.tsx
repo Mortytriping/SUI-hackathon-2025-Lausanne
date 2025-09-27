@@ -190,7 +190,7 @@ export function Alarm({ id }: { id: string }) {
       <CardHeader>
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-gray-900">Alarm Challenge</CardTitle>
+            <CardTitle className="text-gray-900">🎯 {alarmData.habit_type} Challenge</CardTitle>
             <CardDescription className="text-gray-600 mt-1">
               Wake up: {wakeUpTime.toLocaleString()}
             </CardDescription>
@@ -203,7 +203,11 @@ export function Alarm({ id }: { id: string }) {
       
       <CardContent className="space-y-6">
         {/* Alarm Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-2">
+            <div className="text-sm text-gray-600">🎯 Habit Type</div>
+            <div className="text-lg font-semibold">{alarmData.habit_type}</div>
+          </div>
           <div className="space-y-2">
             <div className="text-sm text-gray-600">💰 Deposit Amount</div>
             <div className="text-lg font-semibold">{depositInSUI.toFixed(2)} SUI</div>
@@ -369,6 +373,7 @@ function getAlarmFields(data: SuiObjectData) {
 
   return data.content.fields as {
     owner: string;
+    habit_type: string;
     wake_up_time: string;
     deposit_amount: string;
     charity_address: string;
