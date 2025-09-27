@@ -103,20 +103,20 @@ export function CreateAlarm({
   const getMinDateTime = () => {
     const now = new Date();
     now.setMinutes(now.getMinutes() + 1);
-    return now.toISOString();
+    return now.toISOString().slice(0, 16); // Format for datetime-local
   };
 
   return (
-    <Card className="max-w-4xl mx-auto border-transparent">
+    <Card className="max-w-7xl mx-auto border-transparent bg-gray-50">
       <CardHeader>
         <CardTitle className="text-black text-center text-2xl">⏰ Create New Alarm</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <CardContent className="p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Column 1: Habit Type */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-black mb-2">🎯 Habit Type</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">🎯 Habit Type</h3>
               <p className="text-sm text-gray-600 mb-4">What habit are you building?</p>
             </div>
             <div>
@@ -127,7 +127,13 @@ export function CreateAlarm({
                 id="habitType"
                 value={habitType}
                 onChange={(e) => setHabitType(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 8px center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '16px 16px'
+                }}
               >
                 <option value="">Choose habit type...</option>
                 {HABIT_OPTIONS.map((habit) => (
@@ -140,37 +146,37 @@ export function CreateAlarm({
           </div>
 
           {/* Column 2: Time Selection */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-black mb-2">🕐 Wake Up</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">🕐 Wake Up</h3>
               <p className="text-sm text-gray-600 mb-4">Set your wake-up goal</p>
             </div>
             <div>
               <label htmlFor="wakeUpTime" className="block text-sm font-medium text-gray-700 mb-2">
                 Wake Up Date & Time
               </label>
-              <Input
+              <input
                 id="wakeUpTime"
                 type="datetime-local"
                 min={getMinDateTime()}
                 value={wakeUpTime}
                 onChange={(e) => setWakeUpTime(e.target.value)}
-                className="w-full"
+                className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
               />
             </div>
           </div>
 
           {/* Column 3: Deposit Amount */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">💰 Deposit Amount</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">💰 Deposit Amount</h3>
               <p className="text-sm text-gray-600 mb-4">Your future self will thank you</p>
             </div>
             <div>
               <label htmlFor="depositAmount" className="block text-sm font-medium text-gray-700 mb-2">
                 Amount (SUI)
               </label>
-              <Input
+              <input
                 id="depositAmount"
                 type="number"
                 min="0.01"
@@ -178,7 +184,7 @@ export function CreateAlarm({
                 placeholder="0.1"
                 value={depositAmount}
                 onChange={(e) => setDepositAmount(e.target.value)}
-                className="w-full"
+                className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
               />
               <p className="text-xs text-gray-500 mt-1">
                 Minimum: 0.01 SUI
@@ -187,9 +193,9 @@ export function CreateAlarm({
           </div>
 
           {/* Column 4: Charity Selection */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">🤝 Choose Charity</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">🤝 Choose Charity</h3>
               <p className="text-sm text-gray-600 mb-4">Create positive impact either way</p>
             </div>
             <div>
@@ -200,7 +206,13 @@ export function CreateAlarm({
                 id="charity"
                 value={selectedCharity}
                 onChange={(e) => setSelectedCharity(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 8px center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '16px 16px'
+                }}
               >
                 <option value="">Select a charity...</option>
                 {CHARITY_OPTIONS.map((charity) => (
