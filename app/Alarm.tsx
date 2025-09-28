@@ -160,7 +160,7 @@ export function Alarm({ id }: { id: string }) {
 
   const getStatusColor = () => {
     if (alarmData.is_completed) {
-      return ownedByCurrentAccount ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
+      return ownedByCurrentAccount && !alarmData.charity_address ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
     }
     if (!alarmData.is_active) return "bg-gray-100 text-gray-800";
     if (canFail) return "bg-red-100 text-red-800";
@@ -170,7 +170,7 @@ export function Alarm({ id }: { id: string }) {
 
   const getStatusText = () => {
     if (alarmData.is_completed) {
-      if (ownedByCurrentAccount) return "✅ Completed Successfully";
+      if (ownedByCurrentAccount && !alarmData.charity_address) return "✅ Completed Successfully";
       return "❌ Failed - Donated to Charity";
     }
     if (!alarmData.is_active) return "🚫 Cancelled";
@@ -296,7 +296,7 @@ export function Alarm({ id }: { id: string }) {
         {/* Action Buttons */}
         {ownedByCurrentAccount && (
           <div className="flex flex-wrap gap-3 justify-center">
-            {canComplete && !showVerification && (
+            {canComplete && !showVerification && !canFail && (
               <Button
                 onClick={handleCompleteAlarm}
                 disabled={waitingForTxn !== ""}
