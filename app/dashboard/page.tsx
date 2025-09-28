@@ -76,12 +76,12 @@ export default function Dashboard() {
   }, [account]);
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 bg-white dark:bg-gray-900 min-h-screen transition-colors duration-200">
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
+            <CardTitle className="text-sm font-medium text-gray-700 dark:text-gray-200 transition-colors duration-200">
               Total Alarms Created
             </CardTitle>
             <div className="text-2xl">🎯</div>
@@ -96,9 +96,9 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
+            <CardTitle className="text-sm font-medium text-gray-700 dark:text-gray-200 transition-colors duration-200">
               Completed Successfully
             </CardTitle>
             <div className="text-2xl">✅</div>
@@ -113,9 +113,9 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
+            <CardTitle className="text-sm font-medium text-gray-700 dark:text-gray-200 transition-colors duration-200">
               Failed Attempts
             </CardTitle>
             <div className="text-2xl">❌</div>
@@ -130,9 +130,9 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
+            <CardTitle className="text-sm font-medium text-gray-700 dark:text-gray-200 transition-colors duration-200">
               Success Rate
             </CardTitle>
             <div className="text-2xl">📈</div>
@@ -150,9 +150,9 @@ export default function Dashboard() {
 
       {/* Recent Activity */}
       <div className="grid grid-cols-1 gap-6">
-        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-200">
           <CardHeader>
-            <CardTitle className="text-lg text-gray-900 dark:text-white transition-colors duration-200">
+            <CardTitle className="text-lg text-gray-900 dark:text-white">
               Recent Activity
             </CardTitle>
           </CardHeader>
@@ -171,41 +171,49 @@ export default function Dashboard() {
                   return (
                     <div
                       key={i}
-                      className={`flex justify-between items-center p-3 rounded-lg transition-colors duration-200 ${
-                        isSuccess ? "bg-green-50 dark:bg-green-900/20" : 
-                        isFailed ? "bg-red-50 dark:bg-red-900/20" : 
-                        "bg-blue-50 dark:bg-blue-900/20"
+                      className={`flex justify-between items-center p-4 rounded-lg border transition-colors duration-200 ${
+                        isSuccess 
+                          ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800" 
+                          : isFailed 
+                          ? "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800" 
+                          : "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800"
                       }`}
                     >
-                      <div>
-                        <p className="font-medium text-gray-900 dark:text-white transition-colors duration-200">
+                      <div className="flex-1">
+                        <p className="font-medium text-black mb-1">
                           {event.habit_type || "Alarm"} - {eventType}
                         </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1 transition-colors duration-200">
                           {event.wake_up_time ? new Date(parseInt(event.wake_up_time)).toLocaleString() : "Recent"} —{" "}
                           {isSuccess ? "Success ✅" : isFailed ? "Failed ❌" : "Created 🎯"}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-500 transition-colors duration-200">
+                        <p className="text-xs text-gray-500 dark:text-gray-500 font-mono">
                           ID: {event.alarm_id}
                         </p>
                       </div>
-                      <span
-                        className={`font-semibold transition-colors duration-200 ${
-                          isSuccess ? "text-green-600 dark:text-green-400" : 
-                          isFailed ? "text-red-600 dark:text-red-400" : 
-                          "text-blue-600 dark:text-blue-400"
-                        }`}
-                      >
-                        {event.deposit_amount ? `${(parseInt(event.deposit_amount) / 1_000_000_000).toFixed(2)} SUI` : 
-                         event.amount ? `${(parseInt(event.amount) / 1_000_000_000).toFixed(2)} SUI` : ""}
-                      </span>
+                      <div className="text-right">
+                        <span
+                          className={`font-semibold text-lg ${
+                            isSuccess 
+                              ? "text-green-600 dark:text-green-400" 
+                              : isFailed 
+                              ? "text-red-600 dark:text-red-400" 
+                              : "text-blue-600 dark:text-blue-400"
+                          }`}
+                        >
+                          {event.deposit_amount ? `${(parseInt(event.deposit_amount) / 1_000_000_000).toFixed(2)} SUI` : 
+                           event.amount ? `${(parseInt(event.amount) / 1_000_000_000).toFixed(2)} SUI` : ""}
+                        </span>
+                      </div>
                     </div>
                   );
                 })
               ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200">
-                  No recent activity yet. Create your first alarm to get started!
-                </p>
+                <div className="text-center py-8">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    No recent activity yet. Create your first alarm to get started!
+                  </p>
+                </div>
               )}
             </div>
           </CardContent>
