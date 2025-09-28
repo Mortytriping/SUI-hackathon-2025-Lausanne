@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useCurrentAccount } from "@mysten/dapp-kit"; // hook pour wallet connecté
+import { useCurrentAccount } from "@mysten/dapp-kit";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { useNetworkVariable } from "@/networkConfig";
 import { SuiClient, getFullnodeUrl } from "@mysten/sui/client";
 
@@ -80,53 +79,69 @@ export default function Dashboard() {
     <div className="container mx-auto p-6">
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Alarms Created</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
+              Total Alarms Created
+            </CardTitle>
             <div className="text-2xl">🎯</div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.totalCreated}</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-200">
+              {stats.totalCreated}
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">
               Habit challenges started
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed Successfully</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
+              Completed Successfully
+            </CardTitle>
             <div className="text-2xl">✅</div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">{stats.totalCompleted}</div>
-            <p className="text-xs text-muted-foreforeground">
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400 transition-colors duration-200">
+              {stats.totalCompleted}
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">
               Goals achieved
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Failed Attempts</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
+              Failed Attempts
+            </CardTitle>
             <div className="text-2xl">❌</div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.totalFailed}</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-2xl font-bold text-red-600 dark:text-red-400 transition-colors duration-200">
+              {stats.totalFailed}
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">
               Donations to charity
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Success Rate</CardTitle>
-            <div className="text-2xl">�</div>
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
+              Success Rate
+            </CardTitle>
+            <div className="text-2xl">📈</div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-600">{stats.successRate}%</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 transition-colors duration-200">
+              {stats.successRate}%
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 transition-colors duration-200">
               {stats.totalCompleted + stats.totalFailed > 0 ? 'Achievement rate' : 'No completed alarms yet'}
             </p>
           </CardContent>
@@ -135,9 +150,11 @@ export default function Dashboard() {
 
       {/* Recent Activity */}
       <div className="grid grid-cols-1 gap-6">
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
           <CardHeader>
-            <CardTitle className="text-lg">🕐 Recent Activity</CardTitle>
+            <CardTitle className="text-lg text-gray-900 dark:text-white transition-colors duration-200">
+              Recent Activity
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -154,23 +171,29 @@ export default function Dashboard() {
                   return (
                     <div
                       key={i}
-                      className={`flex justify-between items-center p-3 rounded-lg ${
-                        isSuccess ? "bg-green-50" : isFailed ? "bg-red-50" : "bg-blue-50"
+                      className={`flex justify-between items-center p-3 rounded-lg transition-colors duration-200 ${
+                        isSuccess ? "bg-green-50 dark:bg-green-900/20" : 
+                        isFailed ? "bg-red-50 dark:bg-red-900/20" : 
+                        "bg-blue-50 dark:bg-blue-900/20"
                       }`}
                     >
                       <div>
-                        <p className="font-medium text-gray-900">
-                          🎯 {event.habit_type || "Alarm"} - {eventType}
+                        <p className="font-medium text-gray-900 dark:text-white transition-colors duration-200">
+                          {event.habit_type || "Alarm"} - {eventType}
                         </p>
-                        <p className="text-sm text-gray-600">
-                          {event.wake_up_time ? new Date(parseInt(event.wake_up_time)).toLocaleString() : "Recent"} –{" "}
+                        <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">
+                          {event.wake_up_time ? new Date(parseInt(event.wake_up_time)).toLocaleString() : "Recent"} —{" "}
                           {isSuccess ? "Success ✅" : isFailed ? "Failed ❌" : "Created 🎯"}
                         </p>
-                        <p className="text-xs text-gray-500">ID: {event.alarm_id}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-500 transition-colors duration-200">
+                          ID: {event.alarm_id}
+                        </p>
                       </div>
                       <span
-                        className={`font-semibold ${
-                          isSuccess ? "text-green-600" : isFailed ? "text-red-600" : "text-blue-600"
+                        className={`font-semibold transition-colors duration-200 ${
+                          isSuccess ? "text-green-600 dark:text-green-400" : 
+                          isFailed ? "text-red-600 dark:text-red-400" : 
+                          "text-blue-600 dark:text-blue-400"
                         }`}
                       >
                         {event.deposit_amount ? `${(parseInt(event.deposit_amount) / 1_000_000_000).toFixed(2)} SUI` : 
@@ -180,7 +203,9 @@ export default function Dashboard() {
                   );
                 })
               ) : (
-                <p className="text-sm text-gray-500">No recent activity yet. Create your first alarm to get started!</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200">
+                  No recent activity yet. Create your first alarm to get started!
+                </p>
               )}
             </div>
           </CardContent>

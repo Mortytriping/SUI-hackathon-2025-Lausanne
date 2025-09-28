@@ -1,6 +1,7 @@
 import "@mysten/dapp-kit/dist/index.css";
 import "./globals.css";
 import { Providers } from "./providers";
+import { ThemeProvider } from "./components/ThemeProvider";
 import Navbar from "./components/Navbar";
 
 export default function RootLayout({
@@ -18,8 +19,12 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          <Navbar />
-          {children}
+          <ThemeProvider>
+            <Navbar />
+            <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+              {children}
+            </div>
+          </ThemeProvider>
         </Providers>
       </body>
     </html>

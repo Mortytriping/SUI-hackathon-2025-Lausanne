@@ -51,8 +51,61 @@
   * {
     border-color: hsl(var(--border));
   }
+  
+  html {
+    color-scheme: light;
+  }
+  
+  html.dark {
+    color-scheme: dark;
+  }
+  
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Forcer les couleurs correctes pour éviter le tout noir */
+  .dark body {
+    background-color: rgb(15 23 42) !important; /* slate-900 */
+    color: rgb(248 250 252) !important; /* slate-50 */
+  }
+  
+  /* S'assurer que les cartes ont les bonnes couleurs */
+  .dark [class*="bg-white"] {
+    background-color: rgb(30 41 59) !important; /* slate-800 */
+  }
+  
+  .dark [class*="text-gray-900"] {
+    color: rgb(248 250 252) !important; /* slate-50 */
+  }
+  
+  .dark [class*="text-gray-800"] {
+    color: rgb(226 232 240) !important; /* slate-200 */
+  }
+  
+  .dark [class*="text-gray-700"] {
+    color: rgb(203 213 225) !important; /* slate-300 */
+  }
+  
+  .dark [class*="text-gray-600"] {
+    color: rgb(148 163 184) !important; /* slate-400 */
+  }
+  
+  .dark [class*="border-gray-200"] {
+    border-color: rgb(51 65 85) !important; /* slate-700 */
+  }
+  
+  .dark [class*="border-gray-300"] {
+    border-color: rgb(71 85 105) !important; /* slate-600 */
+  }
+  
+  .dark [class*="bg-gray-50"] {
+    background-color: rgb(51 65 85) !important; /* slate-700 */
+  }
+  
+  .dark [class*="bg-gray-100"] {
+    background-color: rgb(71 85 105) !important; /* slate-600 */
   }
 }
