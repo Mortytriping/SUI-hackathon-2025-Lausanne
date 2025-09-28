@@ -9,6 +9,8 @@
   },
   "scripts": {
     "dev": "next dev",
+    "dev:with-bot": "concurrently \"next dev\" \"cd bot && npm run dev\"",
+    "bot": "cd bot && npm run dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -41,6 +43,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
+    "concurrently": "^8.2.2",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "prettier": "^3.6.2",

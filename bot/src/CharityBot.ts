@@ -64,12 +64,11 @@ class CharityBot {
   }
 
   /**
-   * Get all alarm objects from the blockchain by querying events
+   * Get all alarm objects from the blockchain
    */
   async getAllAlarms(): Promise<AlarmData[]> {
     try {
-      this.log('info', 'Fetching all alarm objects via events...');
-      this.log('info', `Querying for events: ${this.packageId}::alarm::AlarmCreated`);
+      this.log('info', 'Fetching alarm objects...');
       
       // Query AlarmCreated events to find all alarm objects
       const events = await this.suiClient.queryEvents({
@@ -80,33 +79,9 @@ class CharityBot {
         order: 'descending'
       });
 
-      this.log('info', `Found ${events.data.length} AlarmCreated events`);
-
       if (events.data.length === 0) {
-        this.log('info', 'No AlarmCreated events found. Possible reasons:');
-        this.log('info', '1. Package ID might be incorrect');
-        this.log('info', '2. No alarms have been created yet');
-        this.log('info', '3. Event type name might be different');
-        this.log('info', `Current package ID: ${this.packageId}`);
-        
-        // Try to query any events from this package
-        const anyEvents = await this.suiClient.queryEvents({
-          query: {
-            MoveModule: {
-              package: this.packageId,
-              module: 'alarm'
-            }
-          },
-          limit: 10
-        });
-        
-        this.log('info', `Found ${anyEvents.data.length} events from alarm module`);
-        if (anyEvents.data.length > 0) {
-          this.log('info', 'Sample events from alarm module:', anyEvents.data.map(e => ({
-            type: e.type,
-            parsedJson: e.parsedJson
-          })));
-        }
+        this.log('info', 'No AlarmCreated events found');
+        return [];
       }
 
       const alarmIds = new Set<string>();
@@ -114,7 +89,6 @@ class CharityBot {
 
       // Extract alarm IDs from events
       for (const event of events.data) {
-        this.log('info', 'Processing event:', { type: event.type, parsedJson: event.parsedJson });
         if (event.parsedJson && typeof event.parsedJson === 'object') {
           const eventData = event.parsedJson as any;
           if (eventData.alarm_id) {
@@ -155,15 +129,6 @@ class CharityBot {
       }
 
       this.log('info', `Found ${alarms.length} total alarms`);
-      if (alarms.length > 0) {
-        this.log('info', 'Sample alarm data:', {
-          objectId: alarms[0].objectId,
-          habit_type: alarms[0].habit_type,
-          is_active: alarms[0].is_active,
-          is_completed: alarms[0].is_completed,
-          wake_up_time: new Date(parseInt(alarms[0].wake_up_time)).toISOString()
-        });
-      }
       return alarms;
     } catch (error) {
       this.log('error', 'Failed to fetch alarms', error);
@@ -177,7 +142,7 @@ class CharityBot {
   private canFailAlarm(alarm: AlarmData): boolean {
     const currentTime = Date.now();
     const wakeUpTime = parseInt(alarm.wake_up_time);
-    const gracePeriodEnd = wakeUpTime + (60 * 1 * 1000); // 1 hour grace period
+    const gracePeriodEnd = wakeUpTime + (60 * 60 * 1000); // 1 hour grace period (60 min × 60 sec × 1000ms)
     
     return currentTime >= gracePeriodEnd && 
            alarm.is_active && 
