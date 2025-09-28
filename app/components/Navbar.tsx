@@ -28,13 +28,13 @@ export default function Navbar() {
           href="/" 
           className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:scale-105 transition-all duration-200 font-medium"
         >
-          Home
+          🏠 Home
         </Link>
         <Link 
           href="/dashboard" 
           className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:scale-105 transition-all duration-200 font-medium"
         >
-          Dashboard
+          📊 Dashboard
         </Link>
       </div>
 

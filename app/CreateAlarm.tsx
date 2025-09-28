@@ -149,7 +149,7 @@ export function CreateAlarm({
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
-                Wake Up
+                ⏰ Wake Up
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-200">
                 Set your goal
@@ -174,7 +174,7 @@ export function CreateAlarm({
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
-                Deposit Amount
+                💰 Deposit Amount
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-200">
                 Your future self will thank you
@@ -204,7 +204,7 @@ export function CreateAlarm({
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
-                Choose Charity
+                🤝 Choose Charity
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-200">
                 Create positive impact either way
