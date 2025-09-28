@@ -240,12 +240,27 @@ export function Alarm({ id }: { id: string }) {
             <div className="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200">{depositInSUI.toFixed(2)} SUI</div>
           </div>
           <div className="space-y-2">
-            <div className="text-sm text-gray-600">❤️ Charity</div>
-            <div className="text-sm font-mono bg-gray-100 p-2 rounded">
-              {alarmData.charity_address}
+            <div className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">❤️ Charity</div>
+            <div className="flex items-center gap-2">
+              <div className="text-sm font-mono bg-gray-100 dark:bg-gray-700 p-2 rounded flex-1 break-all text-gray-900 dark:text-white transition-colors duration-200" title={alarmData.charity_address}>
+                {truncateAddress(alarmData.charity_address)}
+              </div>
+              <Button
+                onClick={() => copyToClipboard(alarmData.charity_address)}
+                variant="outline"
+                size="sm"
+                className="px-2 py-1 h-8 hover:bg-gray-50 dark:hover:bg-gray-600 border-gray-300 dark:border-gray-600 transition-colors duration-200"
+                title="Copy full address"
+              >
+                {copySuccess ? (
+                  <span className="text-green-600 dark:text-green-400">✓</span>
+                ) : (
+                  <span className="text-gray-500 dark:text-gray-400">📋</span>
+                )}
+              </Button>
             </div>
             {copySuccess && (
-              <div className="text-xs text-green-600 font-medium">
+              <div className="text-xs text-green-600 dark:text-green-400 font-medium transition-colors duration-200">
                 ✓ Address copied to clipboard!
               </div>
             )}
