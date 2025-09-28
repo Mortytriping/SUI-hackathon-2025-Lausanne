@@ -1,0 +1,27 @@
+{
+  "name": "charity-bot",
+  "version": "1.0.0",
+  "description": "Automated bot to send expired alarm deposits to charity",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "watch": "nodemon --exec ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@mysten/sui": "^1.14.0",
+    "dotenv": "^16.3.1",
+    "cron": "^3.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/cron": "^2.0.1",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.1",
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["sui", "blockchain", "charity", "automation"],
+  "author": "Habit Builder",
+  "license": "MIT"
+}
