@@ -15,7 +15,7 @@ export default function RootLayout({
         <meta charSet="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/logo.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Sui dApp Starter</title>
+        <title>On-Chain Habit</title>
       </head>
       <body>
         <Providers>
