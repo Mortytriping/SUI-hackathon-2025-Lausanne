@@ -182,10 +182,11 @@ export function Alarm({ id }: { id: string }) {
   const canComplete = isExpired && alarmData.is_active && !alarmData.is_completed;
   const gracePeriodEnd = parseInt(alarmData.wake_up_time) + (60 * 60 * 1000); // 1 hour grace period
   const canFail = currentTime >= gracePeriodEnd && alarmData.is_active && !alarmData.is_completed;
+  const isFailable = currentTime >= gracePeriodEnd;
 
   const getStatusColor = () => {
     if (alarmData.is_completed) {
-      return ownedByCurrentAccount && !alarmData.charity_address ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
+      return ownedByCurrentAccount && !isFailable ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
     }
     if (!alarmData.is_active) return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300";
     if (canFail) return "bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300";
@@ -195,7 +196,7 @@ export function Alarm({ id }: { id: string }) {
 
   const getStatusText = () => {
     if (alarmData.is_completed) {
-      if (ownedByCurrentAccount && !alarmData.charity_address) return "✅ Completed Successfully";
+      if (ownedByCurrentAccount && !isFailable) return "✅ Completed Successfully";
       return "❌ Failed - Donated to Charity";
     }
     if (!alarmData.is_active) return "Cancelled";
@@ -398,7 +399,7 @@ export function Alarm({ id }: { id: string }) {
             {alarmData.is_completed ? (
               <p>
                 <strong>Completed:</strong> This alarm challenge is finished.
-                {ownedByCurrentAccount ? " You got your deposit back!" : " The deposit went to charity."}
+                {ownedByCurrentAccount && !isFailable ? " You got your deposit back!" : " The deposit went to charity."}
               </p>
             ) : alarmData.is_active ? (
               <p>
