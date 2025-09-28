@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+bot/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -12,117 +13,90 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
+# Coverage
 coverage/
 *.lcov
-
-# NYC test coverage
 .nyc_output
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+# Grunt / Bower
 .grunt
-
-# Bower dependency directory (https://bower.io/)
 bower_components
 
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
+# Compiled binary addons
 build/Release
 
 # Dependency directories
 jspm_packages/
-
-# Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
 
-# Optional npm cache directory
+# Optional caches
 .npm
-
-# Optional eslint cache
 .eslintcache
-
-# Optional stylelint cache
 .stylintcache
-
-# Microbundle cache
 .rpt2_cache/
 .rts2_cache_cjs/
 .rts2_cache_es/
 .rts2_cache_umd/
 
-# Optional REPL history
+# REPL history
 .node_repl_history
 
-# Output of 'npm pack'
+# npm pack output
 *.tgz
 
-# Yarn Integrity file
+# Yarn
 .yarn-integrity
-
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# Next.js build output
-.next/
-out/
-
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Gatsby files
-.cache/
-public
-
-# Vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
-# yarn v2
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
 
-# Sui specific
-*.lock
+# dotenv
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
-# IDE files
+# Parcel / Snowpack
+.cache
+.parcel-cache
+
+# Next.js
+.next/
+out/
+
+# Nuxt / Vue / Gatsby
+.nuxt
+dist
+.cache/
+public
+.vuepress/dist
+
+# Serverless
+.serverless/
+
+# FuseBox / DynamoDB / TernJS
+.fusebox/
+.dynamodb/
+.tern-port
+
+# VSCode testing
+.vscode-test
+
+# IDE / OS files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -135,10 +109,17 @@ Thumbs.db
 logs
 *.log
 
-# Build directories
+# Build dirs
 build/
 dist/
-
-# Temporary files
+bot/dist/
 tmp/
 temp/
+
+# Turbo / Vercel
+.turbo/
+.vercel/
+
+# --- Sui Move ---
+move/**/build/
+.move/
