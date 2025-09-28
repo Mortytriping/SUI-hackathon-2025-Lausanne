@@ -96,33 +96,37 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
     const wakeUpTime = parseInt(alarm.wake_up_time);
     
     if (alarm.is_completed) {
-      return { text: "Completed", color: "text-green-600 bg-green-100" };
+      return { text: "Completed", color: "text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/20" };
     }
     if (!alarm.is_active) {
-      return { text: "Cancelled", color: "text-gray-600 bg-gray-100" };
+      return { text: "Cancelled", color: "text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" };
     }
     if (now > wakeUpTime + 3600000) { // 1 hour past wake up time
-      return { text: "Failed", color: "text-red-600 bg-red-100" };
+      return { text: "Failed", color: "text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/20" };
     }
     if (now > wakeUpTime) {
-      return { text: "Grace Period", color: "text-yellow-600 bg-yellow-100" };
+      return { text: "Grace Period", color: "text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/20" };
     }
-    return { text: "Active", color: "text-blue-600 bg-blue-100" };
+    return { text: "Active", color: "text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/20" };
   };
 
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Find Existing Alarms</h2>
-        <p className="text-gray-600 mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-200">
+          Find Existing Alarms
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-6 transition-colors duration-200">
           Search for existing alarm objects by their Object ID
         </p>
       </div>
 
       {/* Search by Object ID */}
-      <Card>
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
         <CardHeader>
-          <CardTitle className="text-gray-900">Search by Object ID</CardTitle>
+          <CardTitle className="text-gray-900 dark:text-white transition-colors duration-200">
+            Search by Object ID
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex gap-2">
@@ -131,7 +135,7 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
               placeholder="Enter alarm object ID (0x...)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white bg-white dark:bg-gray-700 transition-colors duration-200"
             />
             <Button 
               onClick={searchAlarms}
@@ -142,16 +146,16 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
             </Button>
           </div>
           {error && (
-            <p className="text-red-600 text-sm mt-2">{error}</p>
+            <p className="text-red-600 dark:text-red-400 text-sm mt-2 transition-colors duration-200">{error}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Search Results */}
       {searchResults.length > 0 && (
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
           <CardHeader>
-            <CardTitle className="text-gray-900">
+            <CardTitle className="text-gray-900 dark:text-white transition-colors duration-200">
               Search Results ({searchResults.length})
             </CardTitle>
           </CardHeader>
@@ -160,19 +164,29 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
               {searchResults.map((alarm) => {
                 const status = getStatusDisplay(alarm);
                 return (
-                  <div key={alarm.objectId} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                  <div key={alarm.objectId} className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700/50 transition-colors duration-200">
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${status.color}`}>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 ${status.color}`}>
                             {status.text}
                           </span>
                         </div>
-                        <p className="font-semibold text-gray-900">🎯 {alarm.habit_type}</p>
-                        <p className="font-semibold text-gray-900">⏰ {formatTime(alarm.wake_up_time)}</p>
-                        <p className="text-sm text-gray-600">💰 Deposit: {formatSUI(alarm.deposit_amount)} SUI</p>
-                        <p className="text-sm text-gray-600">👤 Owner: {alarm.owner}</p>
-                        <p className="text-xs text-gray-500">🆔 ID: {alarm.objectId}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white transition-colors duration-200">
+                          {alarm.habit_type}
+                        </p>
+                        <p className="font-semibold text-gray-900 dark:text-white transition-colors duration-200">
+                          {formatTime(alarm.wake_up_time)}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">
+                          Deposit: {formatSUI(alarm.deposit_amount)} SUI
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">
+                          Owner: {alarm.owner}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-500 transition-colors duration-200">
+                          ID: {alarm.objectId}
+                        </p>
                       </div>
                       <Button 
                         onClick={() => onSelectAlarm(alarm.objectId)}
@@ -182,8 +196,8 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
                         View Alarm
                       </Button>
                     </div>
-                    <div className="text-xs text-gray-500">
-                      ❤️ Charity: {alarm.charity_address}
+                    <div className="text-xs text-gray-500 dark:text-gray-500 transition-colors duration-200">
+                      Charity: {alarm.charity_address}
                     </div>
                   </div>
                 );
@@ -194,15 +208,17 @@ export function AlarmList({ onSelectAlarm }: { onSelectAlarm: (id: string) => vo
       )}
 
       {/* Instructions */}
-      <Card>
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-200">
         <CardContent className="pt-6">
-          <div className="text-sm text-gray-600">
-            <h3 className="font-semibold mb-2 text-gray-900">How to find alarm object IDs:</h3>
+          <div className="text-sm text-gray-600 dark:text-gray-300 transition-colors duration-200">
+            <h3 className="font-semibold mb-2 text-gray-900 dark:text-white transition-colors duration-200">
+              How to find alarm object IDs:
+            </h3>
             <ul className="list-disc list-inside space-y-1">
               <li>Create an alarm first to get its object ID</li>
               <li>Copy the object ID from the URL hash after creating an alarm</li>
               <li>Or check the Sui Explorer for your package transactions</li>
-              <li>Look for objects of type: <code className="bg-gray-100 px-1 rounded text-gray-800">Alarm</code></li>
+              <li>Look for objects of type: <code className="bg-gray-100 dark:bg-gray-700 px-1 rounded text-gray-800 dark:text-gray-200 transition-colors duration-200">Alarm</code></li>
               <li>Object IDs are 66 characters long and start with "0x"</li>
             </ul>
           </div>

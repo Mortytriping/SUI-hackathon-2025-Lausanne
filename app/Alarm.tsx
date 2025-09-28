@@ -151,27 +151,27 @@ export function Alarm({ id }: { id: string }) {
   };
 
   if (isPending) return (
-    <Alert>
-      <AlertDescription className="text-muted-foreground">Loading...</AlertDescription>
+    <Alert className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+      <AlertDescription className="text-muted-foreground dark:text-gray-400">Loading...</AlertDescription>
     </Alert>
   );
 
   if (error) return (
-    <Alert variant="destructive">
-      <AlertDescription>Error: {error.message}</AlertDescription>
+    <Alert variant="destructive" className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+      <AlertDescription className="text-red-700 dark:text-red-300">Error: {error.message}</AlertDescription>
     </Alert>
   );
 
   if (!data.data) return (
-    <Alert>
-      <AlertDescription className="text-muted-foreground">Not found</AlertDescription>
+    <Alert className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+      <AlertDescription className="text-muted-foreground dark:text-gray-400">Not found</AlertDescription>
     </Alert>
   );
 
   const alarmData = getAlarmFields(data.data);
   if (!alarmData) return (
-    <Alert variant="destructive">
-      <AlertDescription>Invalid alarm data</AlertDescription>
+    <Alert variant="destructive" className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+      <AlertDescription className="text-red-700 dark:text-red-300">Invalid alarm data</AlertDescription>
     </Alert>
   );
 
@@ -185,42 +185,44 @@ export function Alarm({ id }: { id: string }) {
 
   const getStatusColor = () => {
     if (alarmData.is_completed) {
-      return ownedByCurrentAccount && !canFail ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
+      return ownedByCurrentAccount && !alarmData.charity_address ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
     }
-    if (!alarmData.is_active) return "bg-gray-100 text-gray-800";
-    if (canFail) return "bg-red-100 text-red-800";
-    if (canComplete) return "bg-yellow-100 text-yellow-800";
-    return "bg-blue-100 text-blue-800";
+    if (!alarmData.is_active) return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300";
+    if (canFail) return "bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300";
+    if (canComplete) return "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300";
+    return "bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300";
   };
 
   const getStatusText = () => {
     if (alarmData.is_completed) {
-      if (ownedByCurrentAccount && !canFail) return "✅ Completed Successfully";
+      if (ownedByCurrentAccount && !alarmData.charity_address) return "✅ Completed Successfully";
       return "❌ Failed - Donated to Charity";
     }
-    if (!alarmData.is_active) return "🚫 Cancelled";
-    if (canFail) return "⏰ Failed - Can Donate to Charity";
-    if (canComplete) return "🎯 Ready to Complete!";
-    if (isExpired) return "⚠️ Expired - Grace Period";
-    return "⏳ Active - Waiting";
+    if (!alarmData.is_active) return "Cancelled";
+    if (canFail) return "Failed - Can Donate to Charity";
+    if (canComplete) return "Ready to Complete!";
+    if (isExpired) return "Expired - Grace Period";
+    return "Active - Waiting";
   };
 
   const timeUntilAlarm = parseInt(alarmData.wake_up_time) - currentTime;
   const timeDisplay = timeUntilAlarm > 0 
-    ? `⏰ ${Math.floor(timeUntilAlarm / (1000 * 60 * 60))}h ${Math.floor((timeUntilAlarm % (1000 * 60 * 60)) / (1000 * 60))}m remaining`
-    : "⏰ Time has passed!";
+    ? `${Math.floor(timeUntilAlarm / (1000 * 60 * 60))}h ${Math.floor((timeUntilAlarm % (1000 * 60 * 60)) / (1000 * 60))}m remaining`
+    : "Time has passed!";
 
   return (
-    <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-2xl mx-auto">
+    <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-2xl mx-auto bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
       <CardHeader>
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-gray-900">🎯 {alarmData.habit_type} Challenge</CardTitle>
-            <CardDescription className="text-gray-600 mt-1">
+            <CardTitle className="text-gray-900 dark:text-white transition-colors duration-200">
+              {alarmData.habit_type} Challenge
+            </CardTitle>
+            <CardDescription className="text-gray-600 dark:text-gray-300 mt-1 transition-colors duration-200">
               Time: {wakeUpTime.toLocaleString()}
             </CardDescription>
           </div>
-          <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor()}`}>
+          <span className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${getStatusColor()}`}>
             {getStatusText()}
           </span>
         </div>
@@ -230,32 +232,17 @@ export function Alarm({ id }: { id: string }) {
         {/* Alarm Info */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <div className="text-sm text-gray-600">🎯 Habit Type</div>
-            <div className="text-lg font-semibold">{alarmData.habit_type}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Habit Type</div>
+            <div className="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200">{alarmData.habit_type}</div>
           </div>
           <div className="space-y-2">
-            <div className="text-sm text-gray-600">💰 Deposit Amount</div>
-            <div className="text-lg font-semibold">{depositInSUI.toFixed(2)} SUI</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Deposit Amount</div>
+            <div className="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200">{depositInSUI.toFixed(2)} SUI</div>
           </div>
           <div className="space-y-2">
             <div className="text-sm text-gray-600">❤️ Charity</div>
-            <div className="flex items-center gap-2">
-              <div className="text-sm font-mono bg-gray-100 p-2 rounded flex-1 break-all" title={alarmData.charity_address}>
-                {truncateAddress(alarmData.charity_address)}
-              </div>
-              <Button
-                onClick={() => copyToClipboard(alarmData.charity_address)}
-                variant="outline"
-                size="sm"
-                className="px-2 py-1 h-8 hover:bg-gray-50"
-                title="Copy full address"
-              >
-                {copySuccess ? (
-                  <span className="text-green-600">✓</span>
-                ) : (
-                  <span className="text-gray-500">📋</span>
-                )}
-              </Button>
+            <div className="text-sm font-mono bg-gray-100 p-2 rounded">
+              {alarmData.charity_address}
             </div>
             {copySuccess && (
               <div className="text-xs text-green-600 font-medium">
@@ -266,24 +253,24 @@ export function Alarm({ id }: { id: string }) {
         </div>
 
         {/* Time Display */}
-        <div className="text-center p-4 bg-gray-50 rounded-lg">
-          <div className="text-lg font-medium text-gray-800">
+        <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg transition-colors duration-200">
+          <div className="text-lg font-medium text-gray-800 dark:text-gray-200 transition-colors duration-200">
             {!alarmData.is_completed && alarmData.is_active ? timeDisplay : ""}
           </div>
         </div>
 
         {/* Wake-up Verification Section - Only for "Wake Up Early" challenges */}
         {showVerification && (
-          <div className="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-300 rounded-xl">
+          <div className="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-2 border-yellow-300 dark:border-yellow-600 rounded-xl transition-colors duration-200">
             <div className="text-center mb-6">
               <h3 className="text-xl font-bold text-gray-900 mb-2">🌅 Prove You're Awake!</h3>
               <p className="text-gray-700 mb-4">
-                To complete your "Wake Up Early" challenge and get your deposit back, please type the following positive sentence exactly:
+                To complete your alarm and get your deposit back, please type the following positive sentence exactly:
               </p>
             </div>
             
-            <div className="bg-white p-4 rounded-lg border-l-4 border-green-400 mb-4">
-              <p className="font-medium text-gray-800 text-center italic">
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border-l-4 border-green-400 dark:border-green-500 mb-4 transition-colors duration-200">
+              <p className="font-medium text-gray-800 dark:text-gray-200 text-center italic transition-colors duration-200">
                 "{verificationSentence}"
               </p>
             </div>
@@ -297,12 +284,14 @@ export function Alarm({ id }: { id: string }) {
                   setUserInput(e.target.value);
                   setInputError(""); // Clear error when user types
                 }}
-                className={`w-full p-3 text-lg ${inputError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                className={`w-full p-3 text-lg transition-colors duration-200 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white ${
+                  inputError ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : ''
+                }`}
               />
               
               {inputError && (
-                <Alert className="border-red-300 bg-red-50">
-                  <AlertDescription className="text-red-700">
+                <Alert className="border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/20 transition-colors duration-200">
+                  <AlertDescription className="text-red-700 dark:text-red-300">
                     {inputError}
                   </AlertDescription>
                 </Alert>
@@ -317,7 +306,7 @@ export function Alarm({ id }: { id: string }) {
                   {waitingForTxn === "complete" ? (
                     <ClipLoader size={20} color="white" />
                   ) : (
-                    "✅ Complete Alarm"
+                    "Complete Alarm"
                   )}
                 </Button>
                 
@@ -329,7 +318,7 @@ export function Alarm({ id }: { id: string }) {
                   }}
                   variant="outline"
                   disabled={waitingForTxn !== ""}
-                  className="px-6 py-2 text-lg"
+                  className="px-6 py-2 text-lg border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                 >
                   Cancel
                 </Button>
@@ -350,7 +339,7 @@ export function Alarm({ id }: { id: string }) {
                 {waitingForTxn === "complete" ? (
                   <ClipLoader size={20} color="white" />
                 ) : (
-                  "✅ Mark as Completed"
+                  "Mark as Completed"
                 )}
               </Button>
             )}
@@ -364,7 +353,7 @@ export function Alarm({ id }: { id: string }) {
                 {waitingForTxn === "cancel" ? (
                   <ClipLoader size={20} color="white" />
                 ) : (
-                  "🚫 Cancel Alarm (10% fee)"
+                  "Cancel Alarm (10% fee)"
                 )}
               </Button>
             )}
@@ -382,15 +371,15 @@ export function Alarm({ id }: { id: string }) {
               {waitingForTxn === "fail" ? (
                 <ClipLoader size={20} color="white" />
               ) : (
-                "❌ Mark as Failed (Send to Charity)"
+                "Mark as Failed (Send to Charity)"
               )}
             </Button>
           </div>
         )}
 
         {/* Info Box */}
-        <div className="p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-          <div className="text-sm text-blue-700">
+        <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 dark:border-blue-500 rounded transition-colors duration-200">
+          <div className="text-sm text-blue-700 dark:text-blue-300 transition-colors duration-200">
             {alarmData.is_completed ? (
               <p>
                 <strong>Completed:</strong> This alarm challenge is finished.

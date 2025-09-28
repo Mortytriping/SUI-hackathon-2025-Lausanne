@@ -101,27 +101,33 @@ export function CreateAlarm({
   };
 
   return (
-    <Card className="max-w-7xl mx-auto border-transparent bg-gray-50">
+    <Card className="max-w-7xl mx-auto border-transparent bg-gray-50 dark:bg-gray-800/50 transition-colors duration-200">
       <CardHeader>
-        <CardTitle className="text-black text-center text-2xl">Build Your New Habit</CardTitle>
+        <CardTitle className="text-gray-900 dark:text-white text-center text-2xl transition-colors duration-200">
+          Build Your New Habit
+        </CardTitle>
       </CardHeader>
       <CardContent className="p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Column 1: Habit Type */}
           <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-xl font-semibold text-black mb-2">🎯 Habit Type</h3>
-              <p className="text-sm text-gray-600 mb-4">What habit are you building?</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
+                Habit Type
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-200">
+                What habit are you building?
+              </p>
             </div>
             <div>
-              <label htmlFor="habitType" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="habitType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-200">
                 Habit
               </label>
               <select
                 id="habitType"
                 value={habitType}
                 onChange={(e) => setHabitType(e.target.value)}
-                className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white"
+                className="w-full h-10 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
                   backgroundPosition: 'right 8px center',
@@ -142,11 +148,15 @@ export function CreateAlarm({
           {/* Column 2: Time Selection */}
           <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-xl font-semibold text-black mb-2">🕐 Wake Up</h3>
-              <p className="text-sm text-gray-600 mb-4">Set your goal</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
+                Wake Up
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-200">
+                Set your goal
+              </p>
             </div>
             <div>
-              <label htmlFor="wakeUpTime" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="wakeUpTime" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-200">
                 Date & Time
               </label>
               <input
@@ -155,7 +165,7 @@ export function CreateAlarm({
                 min={getMinDateTime()}
                 value={wakeUpTime}
                 onChange={(e) => setWakeUpTime(e.target.value)}
-                className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full h-10 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
               />
             </div>
           </div>
@@ -163,11 +173,15 @@ export function CreateAlarm({
           {/* Column 3: Deposit Amount */}
           <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">💰 Deposit Amount</h3>
-              <p className="text-sm text-gray-600 mb-4">Your future self will thank you</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
+                Deposit Amount
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-200">
+                Your future self will thank you
+              </p>
             </div>
             <div>
-              <label htmlFor="depositAmount" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="depositAmount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-200">
                 Amount (SUI)
               </label>
               <input
@@ -178,9 +192,9 @@ export function CreateAlarm({
                 placeholder="0.1"
                 value={depositAmount}
                 onChange={(e) => setDepositAmount(e.target.value)}
-                className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full h-10 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 transition-colors duration-200">
                 Minimum: 0.01 SUI
               </p>
             </div>
@@ -189,18 +203,22 @@ export function CreateAlarm({
           {/* Column 4: Charity Selection */}
           <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">🤝 Choose Charity</h3>
-              <p className="text-sm text-gray-600 mb-4">Create positive impact either way</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
+                Choose Charity
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-200">
+                Create positive impact either way
+              </p>
             </div>
             <div>
-              <label htmlFor="charity" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="charity" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-200">
                 Charity
               </label>
               <select
                 id="charity"
                 value={selectedCharity}
                 onChange={(e) => setSelectedCharity(e.target.value)}
-                className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white"
+                className="w-full h-10 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
                   backgroundPosition: 'right 8px center',
@@ -236,15 +254,15 @@ export function CreateAlarm({
         </div>
 
         {/* Info Box */}
-        <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+        <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-500 rounded transition-colors duration-200">
           <div className="flex">
             <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg className="h-5 w-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm text-yellow-700">
+              <p className="text-sm text-yellow-700 dark:text-yellow-300 transition-colors duration-200">
                 <strong>How it works:</strong> Set your alarm and deposit SUI. You have 1 hour after your alarm time to mark it as completed. 
                 If you don't complete it in time, your deposit automatically goes to your chosen charity. You can cancel anytime with a 10% fee.
               </p>
