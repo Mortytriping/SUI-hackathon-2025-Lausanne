@@ -215,7 +215,7 @@ export function Alarm({ id }: { id: string }) {
       <CardHeader>
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-gray-900 dark:text-white transition-colors duration-200">
+            <CardTitle className="text-black">
               {alarmData.habit_type} Challenge
             </CardTitle>
             <CardDescription className="text-gray-600 dark:text-gray-300 mt-1 transition-colors duration-200">
@@ -278,14 +278,14 @@ export function Alarm({ id }: { id: string }) {
         {showVerification && (
           <div className="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-2 border-yellow-300 dark:border-yellow-600 rounded-xl transition-colors duration-200">
             <div className="text-center mb-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">🌅 Prove You're Awake!</h3>
-              <p className="text-gray-700 mb-4">
+              <h3 className="text-xl font-bold text-black mb-2">🌅 Prove You're Awake!</h3>
+              <p className="text-black mb-4">
                 To complete your alarm and get your deposit back, please type the following positive sentence exactly:
               </p>
             </div>
             
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border-l-4 border-green-400 dark:border-green-500 mb-4 transition-colors duration-200">
-              <p className="font-medium text-gray-800 dark:text-gray-200 text-center italic transition-colors duration-200">
+              <p className="font-medium text-gray-800 dark:text-white text-center italic transition-colors duration-200">
                 "{verificationSentence}"
               </p>
             </div>
