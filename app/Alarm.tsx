@@ -296,7 +296,7 @@ export function Alarm({ id }: { id: string }) {
         {/* Action Buttons */}
         {ownedByCurrentAccount && (
           <div className="flex flex-wrap gap-3 justify-center">
-            {canComplete && !showVerification && (
+            {canComplete && !showVerification && !canFail && (
               <Button
                 onClick={handleCompleteAlarm}
                 disabled={waitingForTxn !== ""}
