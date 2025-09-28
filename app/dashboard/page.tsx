@@ -65,8 +65,8 @@ export default function Dashboard() {
           successRate: Math.round(successRate)
         });
         
-        // Show recent activities (last 5)
-        setActivities(filtered.slice(0, 5));
+        // Show recent activities (last 10)
+        setActivities(filtered.slice(0, 10));
       } catch (err) {
         console.error("Error fetching events:", err);
       }
