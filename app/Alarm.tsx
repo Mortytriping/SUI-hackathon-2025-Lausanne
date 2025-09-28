@@ -28,6 +28,14 @@ const WAKE_UP_SENTENCES = [
   "Every sunrise is a reminder that I can begin again with renewed purpose",
 ];
 
+// Helper function to truncate long addresses
+const truncateAddress = (address: string, startLength: number = 6, endLength: number = 4) => {
+  if (address.length <= startLength + endLength + 3) {
+    return address; // Address is short enough, no need to truncate
+  }
+  return `${address.slice(0, startLength)}...${address.slice(-endLength)}`;
+};
+
 export function Alarm({ id }: { id: string }) {
   const alarmPackageId = useNetworkVariable("alarmPackageId");
   const suiClient = useSuiClient();
@@ -47,6 +55,7 @@ export function Alarm({ id }: { id: string }) {
   const [verificationSentence, setVerificationSentence] = useState("");
   const [userInput, setUserInput] = useState("");
   const [inputError, setInputError] = useState("");
+  const [copySuccess, setCopySuccess] = useState(false);
 
   // Update current time every second
   useEffect(() => {
@@ -56,13 +65,29 @@ export function Alarm({ id }: { id: string }) {
     return () => clearInterval(interval);
   }, []);
 
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000); // Hide success message after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
   const handleCompleteAlarm = () => {
-    // Show verification step with random positive sentence
-    const randomSentence = WAKE_UP_SENTENCES[Math.floor(Math.random() * WAKE_UP_SENTENCES.length)];
-    setVerificationSentence(randomSentence);
-    setShowVerification(true);
-    setUserInput("");
-    setInputError("");
+    // Only "Wake Up Early" challenges require sentence verification
+    if (alarmData?.habit_type === "Wake Up Early") {
+      // Show verification step with random positive sentence
+      const randomSentence = WAKE_UP_SENTENCES[Math.floor(Math.random() * WAKE_UP_SENTENCES.length)];
+      setVerificationSentence(randomSentence);
+      setShowVerification(true);
+      setUserInput("");
+      setInputError("");
+    } else {
+      // For other habit types, complete directly without verification
+      executeMoveCall("complete");
+    }
   };
 
   const submitVerification = () => {
@@ -160,9 +185,7 @@ export function Alarm({ id }: { id: string }) {
 
   const getStatusColor = () => {
     if (alarmData.is_completed) {
-      return ownedByCurrentAccount && !alarmData.charity_address ? 
-        "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300" : 
-        "bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300";
+      return ownedByCurrentAccount && !alarmData.charity_address ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
     }
     if (!alarmData.is_active) return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300";
     if (canFail) return "bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300";
@@ -172,8 +195,8 @@ export function Alarm({ id }: { id: string }) {
 
   const getStatusText = () => {
     if (alarmData.is_completed) {
-      if (ownedByCurrentAccount && !alarmData.charity_address) return "Completed Successfully";
-      return "Failed - Donated to Charity";
+      if (ownedByCurrentAccount && !alarmData.charity_address) return "✅ Completed Successfully";
+      return "❌ Failed - Donated to Charity";
     }
     if (!alarmData.is_active) return "Cancelled";
     if (canFail) return "Failed - Can Donate to Charity";
@@ -217,10 +240,15 @@ export function Alarm({ id }: { id: string }) {
             <div className="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200">{depositInSUI.toFixed(2)} SUI</div>
           </div>
           <div className="space-y-2">
-            <div className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Charity</div>
-            <div className="text-sm font-mono bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 p-2 rounded transition-colors duration-200">
+            <div className="text-sm text-gray-600">❤️ Charity</div>
+            <div className="text-sm font-mono bg-gray-100 p-2 rounded">
               {alarmData.charity_address}
             </div>
+            {copySuccess && (
+              <div className="text-xs text-green-600 font-medium">
+                ✓ Address copied to clipboard!
+              </div>
+            )}
           </div>
         </div>
 
@@ -231,12 +259,12 @@ export function Alarm({ id }: { id: string }) {
           </div>
         </div>
 
-        {/* Wake-up Verification Section */}
+        {/* Wake-up Verification Section - Only for "Wake Up Early" challenges */}
         {showVerification && (
           <div className="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-2 border-yellow-300 dark:border-yellow-600 rounded-xl transition-colors duration-200">
             <div className="text-center mb-6">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-200">Prove You're Awake!</h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4 transition-colors duration-200">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">🌅 Prove You're Awake!</h3>
+              <p className="text-gray-700 mb-4">
                 To complete your alarm and get your deposit back, please type the following positive sentence exactly:
               </p>
             </div>

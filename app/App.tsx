@@ -7,11 +7,15 @@ import { CreateAlarm } from "./CreateAlarm";
 import { AlarmList } from "./components/AlarmList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ZkLoginAuth } from "./zklogin/ZkLoginAuth";
+import { useZkLogin } from "./zklogin/useZkLogin";
 
 function App() {
   const currentAccount = useCurrentAccount();
+  const { isAuthenticated: zkLoginAuthenticated } = useZkLogin();
   const [alarmId, setAlarm] = useState<string | null>(null);
   const [view, setView] = useState<'create' | 'search' | 'alarm'>('create');
+  const [authMode, setAuthMode] = useState<'wallet' | 'zklogin'>('wallet');
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -43,7 +47,7 @@ function App() {
     <div className="container mx-auto p-6">
       <Card className="min-h-[500px]">
         <CardContent className="pt-6">
-          {currentAccount ? (
+          {(currentAccount && authMode === 'wallet') || (zkLoginAuthenticated && authMode === 'zklogin') ? (
             alarmId ? (
               <div className="space-y-4">
                 {/* Back button when viewing an alarm */}
@@ -65,6 +69,13 @@ function App() {
               </div>
             ) : (
               <div className="space-y-6">
+                {/* Authentication mode display */}
+                <div className="text-center pb-4 border-b">
+                  <div className="text-sm text-gray-600">
+                    Connected via: <span className="font-semibold">{authMode === 'wallet' ? '🔗 Wallet' : '🔐 zkLogin'}</span>
+                  </div>
+                </div>
+
                 {/* Navigation with proper styling */}
                 <div className="flex justify-center space-x-4">
                   <Button
@@ -100,10 +111,37 @@ function App() {
               </div>
             )
           ) : (
-            <div className="text-center py-12">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">Welcome to Wake Up Challenge</h2>
-              <p className="text-gray-600 mb-4">Set wake-up alarms with financial stakes to help you build better habits!</p>
-              <p className="text-gray-500">Please connect your wallet to get started</p>
+            <div className="space-y-6">
+              <div className="text-center py-12">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Start Building New Habits</h2>
+                <p className="text-gray-600 mb-4">Create habit challenges with financial stakes to help you build better routines!</p>
+              </div>
+
+              {/* Authentication Options */}
+              <div className="flex justify-center space-x-4 mb-6">
+                <div className="text-center">
+                  <p className="text-gray-600 mb-4">Choose how to connect:</p>
+                  <div className="flex justify-center space-x-4">
+                    <div className="text-center">
+                      <p className="text-sm text-gray-500 mb-2">🔗 Traditional Wallet</p>
+                      <p className="text-xs text-gray-400">Use the "Connect Wallet" button in the navigation</p>
+                    </div>
+                    <div className="text-center">
+                      <Button
+                        variant={authMode === 'zklogin' ? 'default' : 'outline'}
+                        onClick={() => setAuthMode('zklogin')}
+                        className="flex items-center space-x-2"
+                      >
+                        <span>🔐</span>
+                        <span>Use zkLogin (OAuth)</span>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* zkLogin Authentication Interface */}
+              {authMode === 'zklogin' && <ZkLoginAuth />}
             </div>
           )}
         </CardContent>
