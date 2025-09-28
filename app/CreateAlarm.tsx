@@ -194,7 +194,7 @@ export function CreateAlarm({
             </div>
             <div>
               <label htmlFor="charity" className="block text-sm font-medium text-gray-700 mb-2">
-                Charitiy
+                Charity
               </label>
               <select
                 id="charity"

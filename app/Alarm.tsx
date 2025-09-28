@@ -192,7 +192,7 @@ export function Alarm({ id }: { id: string }) {
           <div>
             <CardTitle className="text-gray-900">🎯 {alarmData.habit_type} Challenge</CardTitle>
             <CardDescription className="text-gray-600 mt-1">
-              Wake up: {wakeUpTime.toLocaleString()}
+              Time: {wakeUpTime.toLocaleString()}
             </CardDescription>
           </div>
           <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor()}`}>
@@ -296,7 +296,7 @@ export function Alarm({ id }: { id: string }) {
         {/* Action Buttons */}
         {ownedByCurrentAccount && (
           <div className="flex flex-wrap gap-3 justify-center">
-            {canComplete && !showVerification && !canFail && (
+            {canComplete && !showVerification && (
               <Button
                 onClick={handleCompleteAlarm}
                 disabled={waitingForTxn !== ""}
