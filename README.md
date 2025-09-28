@@ -14,8 +14,7 @@ A decentralized habit tracking application built on Sui blockchain.
 1. Clone the repository
 ```bash
 git clone https://github.com/Mortytriping/SUI-hackathon
-cd on-chain-habit-tracker
-```
+cd SUI-hackathon
 
 2. Install dependencies
 ```bash
